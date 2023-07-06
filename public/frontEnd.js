@@ -3,6 +3,66 @@
 
 
 
+// // // Below is not working becuz two div is present with same class name , see the next function code -->
+
+// function themeChange(){
+//     themeChangeBtnClicked++
+//     if(themeChangeBtnClicked%2 !== 0){
+
+//         document.getElementById("body").style.backgroundColor = "black";
+//         document.getElementById("body").style.color = "white";
+
+//         document.getElementsByClassName("inner").style.backgroundColor="black"
+//     }else{
+
+//         document.getElementById("body").style.backgroundColor = "white";
+//         document.getElementById("body").style.color = "black";
+
+//         document.getElementsByClassNamex(".inner").style.backgroundColor="white"
+
+
+//     }
+
+// }
+
+
+let themeChangeBtnClicked = 0
+
+
+function themeChange(){
+
+    themeChangeBtnClicked++
+
+    // // // Inner text of btn changes according to click
+    if(themeChangeBtnClicked % 2 !== 0){
+        document.getElementById("dark").innerText = "Light"
+    }else{
+        document.getElementById("dark").innerText = "Dark"
+    }
+
+    // console.log(themeChangeBtnClicked)
+    // console.log(document.getElementById("dark").value)
+
+    
+    let body = document.body;
+    body.classList.toggle("dark_mode");
+
+    let innerDiv1 = document.getElementsByClassName("inner")[0]
+    let innerDiv2 = document.getElementsByClassName("inner")[1]
+
+    // console.log(innerDiv1)
+    innerDiv1.classList.toggle("dark_inner_div")
+    innerDiv2.classList.toggle("dark_inner_div")
+
+    // // // so getElementsByClassName() will give us list of elements , if more then one is present
+    // // // Then we need to decide which i want to cahnge
+    // // // give !improtant , if dark css is not applied.
+
+    
+}
+
+
+
 // // // contect me form code here ------------------------>
 
 async function contectFormSubmit() {
@@ -143,8 +203,12 @@ async function sendOTP(){
             // // // Set when otp created
             when = data.data
 
-            // // // enable or disable = false for input
+            // // // enable or disable = false for otp
             document.getElementById("otp_input").disabled = false
+
+            // // // enable or disable = false for email
+            document.getElementById("email_otp").disabled = true
+
 
 
             interval = setInterval( ()=>{
@@ -235,6 +299,7 @@ async function verifyOTP(){
 
             clearInterval(interval)
 
+            // // // Css and text for timmer div
             document.getElementById("timer").style.animation = ""
             document.getElementById("timer").innerText = "Matched"
             document.getElementById("timer").style.color = "darkgreen"
