@@ -34,6 +34,7 @@ main {
 
 h1{
     margin: 2vh auto;
+    text-decoration: underline;
     /* width: 90%; */
 }
 
@@ -65,7 +66,15 @@ h1{
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
+
+
+.contect_div:hover {
+    filter: drop-shadow(-5px -5px 4px black);
+    transform: scale(1.0025);
+}
+
 
 .contect_div>.inner {
     background-color: #fff;
