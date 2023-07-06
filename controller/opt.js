@@ -3,20 +3,18 @@
 let storedOTP = []
 
 function genrateOTP() {
-
     let otp = ""
 
     for (let i = 0; i < 6; i++) {
-
         otp += Math.floor(Math.random() * 10)
     }
 
     return otp
-
 }
 
-const transport = require("../config/nodemailer")
 
+
+const transport = require("../config/nodemailer")
 
 
 const sendOTP = async function (req, res) {
@@ -53,8 +51,8 @@ const sendOTP = async function (req, res) {
         const mailOptions = {
             from: process.env.USER_EMAIL,
             to: email,
-            subject: `${realOTP}`,
-            text: `OTP is :- ${storedOTP[storedOTP.length - 1].otp}`
+            subject: `${realOTP} sended using nodemailer.`,
+            text: `OTP from Ashish's website is :- ${storedOTP[storedOTP.length - 1].otp} .`
         }
 
 
@@ -71,7 +69,6 @@ const sendOTP = async function (req, res) {
         })
 
         // res.send(storedOTP)
-
 
     } catch (err) {
         console.log(err)
@@ -95,7 +92,7 @@ const verifyOTP = async function (req, res) {
 
         // console.log(storedOTP)
 
-        let send = false
+        let sended = false
 
         for (let i = 0; i < storedOTP.length; i++) {
 
@@ -104,10 +101,10 @@ const verifyOTP = async function (req, res) {
             if (element[when]) {
 
                 if (otp === element.otp) {
-                    send = true
+                    sended = true
                     return res.status(200).send({ status: true, message: "OTP matched" })
                 } else {
-                    send = true
+                    sended = true
                     return res.status(400).send({ status: false, message: "OTP not matched" })
                 }
 
@@ -115,7 +112,7 @@ const verifyOTP = async function (req, res) {
         }
 
 
-        if (!send) {
+        if (!sended) {
            return res.status(400).send({ status: false, message: "OTP not present or expired" })
         }
 
