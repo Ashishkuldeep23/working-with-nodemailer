@@ -10,7 +10,7 @@
 }
 
 .dark_mode{
-    background-color: black;
+    background-color: #212529;
     color: white;
 }
 
@@ -78,6 +78,8 @@ h1{
 
 .contect_div>.inner {
     background-color: #fff;
+
+    background-image: linear-gradient( 145deg , #ffffaeaa , transparent ,transparent , #c6fefe85 ,transparent , transparent ,#ffffaeaa );
     border: 1px solid;
 
     height: 100%;

@@ -25,16 +25,19 @@
 
 // }
 
+// // // Now i'm going to do same thing with true and false ---->
+// let themeChangeBtnClicked = 0
 
-let themeChangeBtnClicked = 0
+
+let themeChangeBtnClicked = false
 
 
 function themeChange(){
 
-    themeChangeBtnClicked++
+    themeChangeBtnClicked = !themeChangeBtnClicked
 
     // // // Inner text of btn changes according to click
-    if(themeChangeBtnClicked % 2 !== 0){
+    if(themeChangeBtnClicked){
         document.getElementById("dark").innerText = "Light"
     }else{
         document.getElementById("dark").innerText = "Dark"
@@ -44,9 +47,11 @@ function themeChange(){
     // console.log(document.getElementById("dark").value)
 
     
+    // // // class name toggle in body -------------->
     let body = document.body;
     body.classList.toggle("dark_mode");
 
+    // // // class nam etoggle b/w two divs ----------->
     let innerDiv1 = document.getElementsByClassName("inner")[0]
     let innerDiv2 = document.getElementsByClassName("inner")[1]
 
