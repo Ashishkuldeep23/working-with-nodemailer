@@ -1,6 +1,14 @@
 // alert("ok")
 
 
+// // // Some improtant rejex are ---------->
+
+let emailRjex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+let nameRejex = /^[A-Za-z\ss]{1,35}$/
+let otpRejex = /^[0-9]+$/
+
+
+
 
 
 // // // Below is not working becuz two div is present with same class name , see the next function code -->
@@ -39,6 +47,8 @@ function themeChange(){
     // // // Inner text of btn changes according to click
     if(themeChangeBtnClicked){
         document.getElementById("dark").innerText = "Light"
+        document.getElementById("dark").style.backgroundColor = "#fff"
+        document.getElementById("dark").style.color = "black"
     }else{
         document.getElementById("dark").innerText = "Dark"
     }
@@ -67,6 +77,25 @@ function themeChange(){
 }
 
 
+// // // GO to top btn show on perticular scrool value --->
+
+
+let myScrollFunc = function () {
+    let y = window.scrollY;
+  
+    if(y > 200.0){
+        document.getElementById("goto_top").style.visibility = "visible"
+    }else{
+        document.getElementById("goto_top").style.visibility = "hidden"
+    }
+};
+
+window.addEventListener("scroll", myScrollFunc);
+
+
+
+
+
 
 // // // contect me form code here ------------------------>
 
@@ -82,12 +111,15 @@ async function contectFormSubmit() {
         // alert(name + email + message +"Let's submit")
 
         if (!name || !email || !message) {
-            return alert(`Improtant field missing `)
+            return alert(`Improtant field is missing (All fields should given)`)
         }
 
         // // // validation of email here ------------>
         // // Check email by regex ---------->
 
+        if(!nameRejex.test(name)) return alert(`${name} :- Given name is incorrect`)
+
+        if(!emailRjex.test(email)) return  alert(`${email} :- Given Email is  incorrect.`)
 
 
 
@@ -141,10 +173,16 @@ async function contectFormSubmit() {
 
 // // // OTP code here ------------------------>
 
-let time = 120
+// // OTP btn clicked (should clicked only once)(Send OTP btn clicked or not)
 let clicked = false
+
+// // // 120 seconds for verify otp ---> 
+let time = 120
+
+// // // This var stored when otp sended from fronted and checked this value on backend
 let when = ""
 
+// // // This var will store setInterval value in send otp section and clear once 120s over or otp is valid.
 let interval = ''
 
 
@@ -164,10 +202,15 @@ async function sendOTP(){
         // console.log(email)
 
         if(!email){
-            return alert("Email is not given")
+            return alert("Email is not given.")
         }
 
-        // // Send otp btn clicked
+        if(!emailRjex.test(email)){
+            return alert(`${email} :- Given Email is not correct.`)
+        }
+
+
+        // // OTP btn clicked (should clicked only once)(below code should below after all validations )
         clicked = true
 
         // // // Showing timer ------->
@@ -239,7 +282,7 @@ async function sendOTP(){
 
     
     } catch (e) {
-        alert(a.message)
+        alert(e.message)
     }
 
 }
@@ -268,14 +311,20 @@ async function verifyOTP(){
 
         // console.log(otp.length)
 
+                
+        if(!otp){
+            return alert("OTP is not given")
+        }
+
         if(otp.length !== 6){
             return alert("OTP must in 6 digit only")
         }
 
-        
-        if(!otp){
-            return alert("OTP is not given")
+
+        if(!otpRejex.test(otp)){
+            return alert(`${otp} :- Given OTP is not correct.`)
         }
+
 
 
         let body = {
