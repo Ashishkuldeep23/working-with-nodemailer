@@ -131,7 +131,7 @@ async function contectFormSubmit() {
         // // // validation of email here ------------>
         // // Check email by regex ---------->
 
-        if(!nameRejex.test(name)) return alert(`${name} :- Given name is incorrect`)
+        if(!nameRejex.test(name)) return alert(`${name} :- Given name is incorrect, Only alphabets are allowed`)
 
         if(!emailRjex.test(email)) return  alert(`${email} :- Given Email is  incorrect.`)
 
@@ -330,15 +330,13 @@ async function verifyOTP(){
             return alert("OTP is not given")
         }
 
+        if(!otpRejex.test(otp)){
+            return alert(`${otp} :- Given OTP is not correct. Only numbers are allowed`)
+        }
+
         if(otp.length !== 6){
             return alert("OTP must in 6 digit only")
         }
-
-
-        if(!otpRejex.test(otp)){
-            return alert(`${otp} :- Given OTP is not correct.`)
-        }
-
 
 
         let body = {

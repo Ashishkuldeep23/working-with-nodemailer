@@ -30,7 +30,7 @@
     margin: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    font-family:cursive, monospace;
+    font-family: cursive , monospace;
 }
 
 
@@ -456,11 +456,10 @@ footer {
     }
 
     100% {
-
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: darkred;
         background-color: lightsalmon;
-        transform: scaleX(1.01);
+        transform: scaleX(1);
         border-radius: 50%;
     }
 
@@ -472,6 +471,10 @@ footer {
 /* Media queries starts here ------------------> */
 
 @media (max-width:694px) {
+
+    *{
+        font-family: 'Lucida Sans';
+    }
 
     h1 {
         font-size: 1.2rem;
