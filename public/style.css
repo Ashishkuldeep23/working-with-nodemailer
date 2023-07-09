@@ -520,6 +520,15 @@ footer {
 
     }
 
+    footer {
+        flex-direction: column-reverse;
+    }
+
+    .foot_content {
+        justify-content: end;
+        margin-top: 5vh;
+    }
+
 }
 
 
@@ -536,15 +545,6 @@ footer {
 
     .opt_verify>p {
         width: -webkit-fill-available;
-    }
-
-    footer {
-        flex-direction: column-reverse;
-    }
-
-    .foot_content {
-        justify-content: end;
-        margin-top: 5vh;
     }
 
 }
