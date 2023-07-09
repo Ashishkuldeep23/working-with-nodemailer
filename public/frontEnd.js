@@ -46,11 +46,23 @@ function themeChange(){
 
     // // // Inner text of btn changes according to click
     if(themeChangeBtnClicked){
-        document.getElementById("dark").innerText = "Light"
+        document.getElementById("dark").innerText = "Light"         // // // InnerText of dark btn
+
+        // // // Dark btn style ------>
         document.getElementById("dark").style.backgroundColor = "#fff"
         document.getElementById("dark").style.color = "black"
+
+        // // // Theme color decid(New color) ---->
+        document.querySelector(":root").style.setProperty('--ligth_pink', '#7df7f9fc');
     }else{
-        document.getElementById("dark").innerText = "Dark"
+        document.getElementById("dark").innerText = "Dark"         // // // InnerText of dark btn
+
+        // // // Dark btn style ------>
+        document.getElementById("dark").style.backgroundColor = "black"
+        document.getElementById("dark").style.color = "#fff"
+        
+        // // // Theme color decid(Back to normal color) ---->
+        document.querySelector(":root").style.setProperty('--ligth_pink', '#f2cbcb');
     }
 
     // console.log(themeChangeBtnClicked)
@@ -72,9 +84,11 @@ function themeChange(){
     // // // so getElementsByClassName() will give us list of elements , if more then one is present
     // // // Then we need to decide which i want to cahnge
     // // // give !improtant , if dark css is not applied.
-
     
 }
+
+
+
 
 
 // // // GO to top btn show on perticular scrool value --->
