@@ -275,6 +275,9 @@ async function sendOTP(){
             console.log(data.message)
             alert(data.message)
         }else{
+            allSendedAndVerifiedOTP()    // // // function for get data how many otp sended
+
+
             document.getElementById("timer").style.animation = "time 0.5s infinite alternate"
             // console.log(data)
 
@@ -379,7 +382,9 @@ async function verifyOTP(){
             alert(data.message)
         }else{
 
-            clearInterval(interval)
+            clearInterval(interval)     // // // Clearing interval of timer
+
+            allSendedAndVerifiedOTP()    // // // function for get data how many otp sended
 
             // // // Css and text for timmer div
             document.getElementById("timer").style.animation = ""
@@ -410,3 +415,36 @@ async function verifyOTP(){
 }
 
 
+
+
+async function allSendedAndVerifiedOTP () {
+
+    try{
+
+
+        let request = await fetch("/allValuesAre" )
+
+        let data = await request.json()
+
+        // console.log(json)
+
+        if(!data.status){
+            console.log(data)
+            alert(data.message)
+        }else{
+            console.log(data.data)
+            document.getElementById("otp_sended_num").innerText = data.data.totelSendedOTPsAre
+            document.getElementById("otp_verified_num").innerText = data.data.totelVerifiedOTPsAre
+        }
+
+
+    } catch(e){
+        alert(e.message)
+    }
+
+}
+
+
+
+// // // function called once window refresh ----------->
+allSendedAndVerifiedOTP()    // // // function for get data 

@@ -1,7 +1,7 @@
 const router = require("express").Router()
 
 const {post_contact_form} = require("../controller/post_form_controller")
-const {sendOTP , verifyOTP} = require("../controller/opt")
+const {sendOTP , verifyOTP , getAllSendedAndVerifyVals} = require("../controller/opt")
 
 
 router.get("/" , (req,res)=>{
@@ -11,9 +11,12 @@ router.get("/" , (req,res)=>{
 
 
 
-
+// // contect form Api ----->
 router.post("/contect-form" , post_contact_form)
 
+
+// // // OTP Api ---------->
+router.get("/allValuesAre" , getAllSendedAndVerifyVals)
 router.post("/sendOTP" , sendOTP)
 router.post("/verifyOTP" , verifyOTP)
 

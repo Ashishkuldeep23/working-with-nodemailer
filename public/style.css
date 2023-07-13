@@ -111,7 +111,7 @@ h1 {
     margin-left: 0.5vh;
     position: relative;
     left: 20%;
-    
+
     transition: transform 200ms;
 }
 
@@ -165,15 +165,16 @@ main {
 
     height: 100%;
     width: 100%;
-
     min-height: inherit;
 
     border-radius: 2vh;
     padding: 2vh;
+    
 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 
@@ -182,7 +183,7 @@ main {
     width: 70%;
     border-radius: 1vh;
     border: 2px solid var(--ligth_pink);
-
+    margin: 0.5vh;
 }
 
 
