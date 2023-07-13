@@ -1,6 +1,16 @@
 // alert("ok")
 
 
+/* 
+
+Notes are : - 
+1) toggle of class by getting element in js.
+2) Toggle by js var value as true.
+3) Show div on some scroll value
+4) Get element by class will give you arr of element then you should know where you going to change something.
+*/
+
+
 // // // Some improtant rejex are ---------->
 
 let emailRjex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -48,18 +58,20 @@ function themeChange(){
     if(themeChangeBtnClicked){
         document.getElementById("dark").innerText = "Light"         // // // InnerText of dark btn
 
+        // // Style of btn done by css style , see .dark_mode class.
         // // // Dark btn style ------>
-        document.getElementById("dark").style.backgroundColor = "#fff"
-        document.getElementById("dark").style.color = "black"
+        // document.getElementById("dark").style.backgroundColor = "#fff"
+        // document.getElementById("dark").style.color = "black"
 
         // // // Theme color decid(New color) ---->
         document.querySelector(":root").style.setProperty('--ligth_pink', '#7df7f9fc');
     }else{
         document.getElementById("dark").innerText = "Dark"         // // // InnerText of dark btn
 
+        // // Style of btn done by css style , see .dark_mode class.
         // // // Dark btn style ------>
-        document.getElementById("dark").style.backgroundColor = "black"
-        document.getElementById("dark").style.color = "#fff"
+        // document.getElementById("dark").style.backgroundColor = "black"
+        // document.getElementById("dark").style.color = "#fff"
         
         // // // Theme color decid(Back to normal color) ---->
         document.querySelector(":root").style.setProperty('--ligth_pink', '#f2cbcb');
@@ -73,13 +85,17 @@ function themeChange(){
     let body = document.body;
     body.classList.toggle("dark_mode");
 
-    // // // class nam etoggle b/w two divs ----------->
-    let innerDiv1 = document.getElementsByClassName("inner")[0]
-    let innerDiv2 = document.getElementsByClassName("inner")[1]
 
-    // console.log(innerDiv1)
-    innerDiv1.classList.toggle("dark_inner_div")
-    innerDiv2.classList.toggle("dark_inner_div")
+    // // // Below funcinality achived by css giving more style inside dark mode class and use it. see the css file and .dark_mode class
+
+
+    // // // // class nam etoggle b/w two divs ----------->
+    // let innerDiv1 = document.getElementsByClassName("inner")[0]
+    // let innerDiv2 = document.getElementsByClassName("inner")[1]
+
+    // // console.log(innerDiv1)
+    // innerDiv1.classList.toggle("dark_inner_div")
+    // innerDiv2.classList.toggle("dark_inner_div")
 
     // // // so getElementsByClassName() will give us list of elements , if more then one is present
     // // // Then we need to decide which i want to cahnge
