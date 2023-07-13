@@ -26,7 +26,7 @@ let storedOTP = []
 //     "totelVerifiedOTPsAre" : 0
 // }
 
-let path = __dirname + "\\data.json"
+let path = __filename
 
 
  async function updateDataInJsonFile( keyName ){
