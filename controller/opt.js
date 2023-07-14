@@ -1,4 +1,3 @@
-const { json } = require("express")
 const transport = require("../config/nodemailer")          // // Importing nodemailter config function. 
 
 
@@ -26,7 +25,7 @@ let storedOTP = []
 //     "totelVerifiedOTPsAre" : 0
 // }
 
-let path = __filename
+let path = __dirname + "//data.json"
 
 
  async function updateDataInJsonFile( keyName ){
