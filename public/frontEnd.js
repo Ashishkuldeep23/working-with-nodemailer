@@ -193,6 +193,7 @@ async function contectFormSubmit() {
 
 
     } catch (e) {
+        console.log(e)
         alert(a.message)
     }
 
@@ -315,6 +316,7 @@ async function sendOTP(){
 
     
     } catch (e) {
+        console.log(e)
         alert(e.message)
     }
 
@@ -410,6 +412,7 @@ async function verifyOTP(){
 
     
     } catch (e) {
+        console.log(e)
         alert(a.message)
     }
 }
@@ -440,6 +443,7 @@ async function allSendedAndVerifiedOTP () {
 
 
     } catch(e){
+        console.log(e)
         alert(e.message)
     }
 
