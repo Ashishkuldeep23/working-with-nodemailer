@@ -432,7 +432,8 @@ async function allSendedAndVerifiedOTP () {
             console.log(data)
             alert(data.message)
         }else{
-            console.log(data.data)
+            // console.log(data.data)
+            console.log("OTP number updated.")
             document.getElementById("otp_sended_num").innerText = data.data.totelSendedOTPsAre
             document.getElementById("otp_verified_num").innerText = data.data.totelVerifiedOTPsAre
         }
