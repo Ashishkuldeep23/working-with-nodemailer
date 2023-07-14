@@ -28,20 +28,22 @@ let storedOTP = []
 let path = __dirname + "//data.json"
 
 
- async function updateDataInJsonFile( keyName ){
+// // // // update otp code ---------->
+
+async function updateDataInJsonFile(keyName) {
 
     // console.log(path)
-    
-    let data = await fs.readFileSync(path , { encoding: 'utf8', flag: 'r+' })
+
+    let data = await fs.readFileSync(path, { encoding: 'utf8', flag: 'r+' })
 
     // console.log(data)    // // // geting data in from of json
 
-    let newData= JSON.parse(data)   // // // Storing that data in other var
+    let newData = JSON.parse(data)   // // // Storing that data in other var
 
     newData[keyName]++      // // // Increasing value of given key in params
 
     // console.log(newData)
-    
+
 
     // let update = newData[keyName]
 
@@ -49,13 +51,13 @@ let path = __dirname + "//data.json"
 
 
 
-    await fs.writeFile( path , JSON.stringify(newData) , (err )=>{
-        if(err){
+    await fs.writeFile(path, JSON.stringify(newData), (err) => {
+        if (err) {
             throw err
         }
         console.log("updated")
-        
-    } )
+
+    })
 
     // // // Writing same file with different obj recently created 
 
@@ -65,13 +67,17 @@ let path = __dirname + "//data.json"
 
 
 
+// // // Change data.json with actual data on every code push from localhost --> 
+
+// // // Get all previous otp data code ------>
+
 async function getAllSendedAndVerifyVals(req, res) {
     try {
 
 
 
         // updateDataInJsonFile("totelSendedOTPsAre")   // // checking here
-        
+
         // let loadDataOfJsonFile
 
         // fs.readFile( path , (err, data) => {
@@ -79,17 +85,17 @@ async function getAllSendedAndVerifyVals(req, res) {
         //     if (err) throw err;
 
         //     console.log(data)
-          
+
         //     loadDataOfJsonFile =  JSON.parse(data);
         //     console.log(loadDataOfJsonFile);
         // });
 
 
-        let data = await fs.readFileSync( path , { encoding: 'utf8', flag: 'r' } )
+        let data = await fs.readFileSync(path, { encoding: 'utf8', flag: 'r' })
 
         let newData = JSON.parse(data)
 
-        res.status(200).send({status : true , data : {...newData} })
+        res.status(200).send({ status: true, data: { ...newData } })
 
     } catch (err) {
         console.log(err)
@@ -100,6 +106,8 @@ async function getAllSendedAndVerifyVals(req, res) {
 
 
 
+
+// // // Send opt code ------------->
 
 
 const sendOTP = async function (req, res) {
@@ -168,6 +176,9 @@ const sendOTP = async function (req, res) {
 
 
 
+
+// // // Verify opt code ------------->
+
 const verifyOTP = async function (req, res) {
     try {
 
@@ -191,7 +202,7 @@ const verifyOTP = async function (req, res) {
                 if (otp === element.otp) {
                     // totelVerifiedOTPsAre++
 
-        
+
                     updateDataInJsonFile("totelVerifiedOTPsAre")
 
 
@@ -222,4 +233,4 @@ const verifyOTP = async function (req, res) {
 
 
 
-module.exports = { sendOTP, verifyOTP , getAllSendedAndVerifyVals }
+module.exports = { sendOTP, verifyOTP, getAllSendedAndVerifyVals }
