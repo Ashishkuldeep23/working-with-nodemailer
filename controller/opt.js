@@ -30,6 +30,8 @@ let path = __dirname + "//data.json"
 
  async function updateDataInJsonFile( keyName ){
 
+    // console.log(path)
+    
     let data = await fs.readFileSync(path , { encoding: 'utf8', flag: 'r+' })
 
     // console.log(data)    // // // geting data in from of json
