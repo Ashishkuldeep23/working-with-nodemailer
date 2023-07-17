@@ -50,12 +50,12 @@ let otpRejex = /^[0-9]+$/
 let themeChangeBtnClicked = false
 
 
-function themeChange(){
+function themeChange() {
 
     themeChangeBtnClicked = !themeChangeBtnClicked
 
     // // // Inner text of btn changes according to click
-    if(themeChangeBtnClicked){
+    if (themeChangeBtnClicked) {
         document.getElementById("dark").innerText = "Light"         // // // InnerText of dark btn
 
         // // Style of btn done by css style , see .dark_mode class.
@@ -65,14 +65,14 @@ function themeChange(){
 
         // // // Theme color decid(New color) ---->
         document.querySelector(":root").style.setProperty('--ligth_pink', '#7df7f9fc');
-    }else{
+    } else {
         document.getElementById("dark").innerText = "Dark"         // // // InnerText of dark btn
 
         // // Style of btn done by css style , see .dark_mode class.
         // // // Dark btn style ------>
         // document.getElementById("dark").style.backgroundColor = "black"
         // document.getElementById("dark").style.color = "#fff"
-        
+
         // // // Theme color decid(Back to normal color) ---->
         document.querySelector(":root").style.setProperty('--ligth_pink', '#f2cbcb');
     }
@@ -80,7 +80,7 @@ function themeChange(){
     // console.log(themeChangeBtnClicked)
     // console.log(document.getElementById("dark").value)
 
-    
+
     // // // class name toggle in body -------------->
     let body = document.body;
     body.classList.toggle("dark_mode");
@@ -100,7 +100,7 @@ function themeChange(){
     // // // so getElementsByClassName() will give us list of elements , if more then one is present
     // // // Then we need to decide which i want to cahnge
     // // // give !improtant , if dark css is not applied.
-    
+
 }
 
 
@@ -112,10 +112,10 @@ function themeChange(){
 
 let myScrollFunc = function () {
     let y = window.scrollY;
-  
-    if(y > 200.0){
+
+    if (y > 200.0) {
         document.getElementById("goto_top").style.visibility = "visible"
-    }else{
+    } else {
         document.getElementById("goto_top").style.visibility = "hidden"
     }
 };
@@ -147,9 +147,9 @@ async function contectFormSubmit() {
         // // // validation of email here ------------>
         // // Check email by regex ---------->
 
-        if(!nameRejex.test(name)) return alert(`${name} :- Given name is incorrect, Only alphabets are allowed`)
+        if (!nameRejex.test(name)) return alert(`${name} :- Given name is incorrect, Only alphabets are allowed`)
 
-        if(!emailRjex.test(email)) return  alert(`${email} :- Given Email is  incorrect.`)
+        if (!emailRjex.test(email)) return alert(`${email} :- Given Email is  incorrect.`)
 
 
 
@@ -182,7 +182,7 @@ async function contectFormSubmit() {
             alert(data.message)
         } else {
             console.log(data)
-            
+
             document.getElementById("name").value = ""
             document.getElementById("email").value = ""
             document.getElementById("message").value = ""
@@ -220,11 +220,11 @@ let interval = ''
 
 // // // send otp ----------> 
 
-async function sendOTP(){
-    try{
+async function sendOTP() {
+    try {
 
 
-        if(clicked){
+        if (clicked) {
             return
         }
 
@@ -232,11 +232,11 @@ async function sendOTP(){
 
         // console.log(email)
 
-        if(!email){
+        if (!email) {
             return alert("Email is not given.")
         }
 
-        if(!emailRjex.test(email)){
+        if (!emailRjex.test(email)) {
             return alert(`${email} :- Given Email is not correct.`)
         }
 
@@ -253,29 +253,29 @@ async function sendOTP(){
 
 
         let body = {
-            email : email
+            email: email
         }
 
         let option = {
-            method : "POST" ,
-            body : JSON.stringify(body) , 
-            headers : {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
                 'Content-Type': 'application/json'
             }
 
         }
 
 
-        let request = await fetch("/sendOTP" , option)
+        let request = await fetch("/sendOTP", option)
 
         let data = await request.json()
 
         // console.log(data)
 
-        if(!data.status){
+        if (!data.status) {
             console.log(data.message)
             alert(data.message)
-        }else{
+        } else {
             allSendedAndVerifiedOTP()    // // // function for get data how many otp sended
 
 
@@ -293,20 +293,30 @@ async function sendOTP(){
 
 
 
-            interval = setInterval( ()=>{
-                let newTime = time-1
+            // // // setInterval or timer for checking ------------>
+            interval = setInterval(() => {
+                let newTime = time - 1
                 document.getElementById("timer").innerText = `${newTime}s`
                 time = newTime
 
-                if(time < 0){
+                if (time < 0) {
                     document.getElementById("timer").style.animation = ""
-                    document.getElementById("timer").innerText = "try again"
+                    document.getElementById("timer").innerText = "Try again"
                     document.getElementById("timer").style.color = "darkred"
                     alert("OTP expried")
                     clearInterval(interval)
+
+                    // document.getElementById("otp_input").value = ""
+                    document.getElementById("otp_input").disabled = true
+
+                    // // Email null value ---------->
+                    document.getElementById("email_otp").value = "Timeout, Refresh page for again send otp."
+                    document.getElementById("email_otp").style.color = "darkred"
+                    document.getElementById("email_otp").disabled = true
+                    
                 }
 
-            }  , 1000)
+            }, 1000)
 
 
             return
@@ -314,7 +324,7 @@ async function sendOTP(){
 
 
 
-    
+
     } catch (e) {
         console.log(e)
         alert(e.message)
@@ -329,15 +339,15 @@ async function sendOTP(){
 
 let isProcessDone = false
 
-async function verifyOTP(){
-    try{
+async function verifyOTP() {
+    try {
 
-        if(!clicked){
+        if (!clicked) {
             return alert("Send OTP  first")
         }
 
-        if(isProcessDone){
-            return
+        if (isProcessDone) {
+            return alert("Refresh page for again send otp.")
         }
 
         // console.log(when)
@@ -346,43 +356,43 @@ async function verifyOTP(){
 
         // console.log(otp.length)
 
-                
-        if(!otp){
+
+        if (!otp) {
             return alert("OTP is not given")
         }
 
-        if(!otpRejex.test(otp)){
+        if (!otpRejex.test(otp)) {
             return alert(`${otp} :- Given OTP is not correct. Only numbers are allowed`)
         }
 
-        if(otp.length !== 6){
+        if (otp.length !== 6) {
             return alert("OTP must in 6 digit only")
         }
 
 
         let body = {
-            otp , when
+            otp, when
         }
 
-        
+
         let option = {
-            method : "POST" ,
-            body : JSON.stringify(body) , 
-            headers : {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
                 'Content-Type': 'application/json'
             }
 
         }
 
 
-        let request = await fetch("/verifyOTP" , option)
+        let request = await fetch("/verifyOTP", option)
 
         let data = await request.json()
 
-        if(!data.status){
+        if (!data.status) {
             console.log(data)
             alert(data.message)
-        }else{
+        } else {
 
             clearInterval(interval)     // // // Clearing interval of timer
 
@@ -398,7 +408,8 @@ async function verifyOTP(){
             document.getElementById("otp_input").disabled = true
 
             // // Email null value ---------->
-            document.getElementById("email_otp").value = "Done, Refresh page for again send otp."
+            document.getElementById("email_otp").value = "Matched, Refresh page for again send otp."
+            document.getElementById("email_otp").style.color = "darkgreen"
             document.getElementById("email_otp").disabled = true
 
             // // process done -------------->
@@ -410,7 +421,7 @@ async function verifyOTP(){
 
 
 
-    
+
     } catch (e) {
         console.log(e)
         alert(a.message)
@@ -420,21 +431,21 @@ async function verifyOTP(){
 
 
 
-async function allSendedAndVerifiedOTP () {
+async function allSendedAndVerifiedOTP() {
 
-    try{
+    try {
 
 
-        let request = await fetch("/allValuesAre" )
+        let request = await fetch("/allValuesAre")
 
         let data = await request.json()
 
         // console.log(json)
 
-        if(!data.status){
+        if (!data.status) {
             console.log(data)
             alert(data.message)
-        }else{
+        } else {
             // console.log(data.data)
             console.log("OTP number updated.")
             document.getElementById("otp_sended_num").innerText = data.data.totelSendedOTPsAre
@@ -442,7 +453,7 @@ async function allSendedAndVerifiedOTP () {
         }
 
 
-    } catch(e){
+    } catch (e) {
         console.log(e)
         alert(e.message)
     }

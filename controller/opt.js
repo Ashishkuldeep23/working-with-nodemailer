@@ -182,10 +182,10 @@ const sendOTP = async function (req, res) {
 const verifyOTP = async function (req, res) {
     try {
 
-        let otp = req.body.otp
+        let otpIs = req.body.otp
         let when = req.body.when
 
-        if (!otp || !when) {
+        if (!otpIs || !when) {
             return res.status(400).send({ status: false, message: "Field missing" })
         }
 
@@ -199,7 +199,7 @@ const verifyOTP = async function (req, res) {
 
             if (element[when]) {
 
-                if (otp === element.otp) {
+                if (otpIs === element.otp) {
                     // totelVerifiedOTPsAre++
 
 
