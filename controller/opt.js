@@ -1,7 +1,8 @@
 const transport = require("../config/nodemailer")          // // Importing nodemailter config function. 
 
-
-const fs = require("fs")
+// // // Improtant mongoose model here ---------->
+const sendedModel = require("../model/sendedOTP")
+const verifiedModel = require("../model/verifiedOTP")
 
 
 // // // This code will genrate 6 digit otp --->
@@ -20,93 +21,7 @@ function genrateOTP() {
 let storedOTP = []
 
 
-// {
-//     "totelSendedOTPsAre" : 0 ,
-//     "totelVerifiedOTPsAre" : 0
-// }
-
-let path = __dirname + "//data.json"
-
-
-// // // // update otp code ---------->
-
-async function updateDataInJsonFile(keyName) {
-
-    // console.log(path)
-
-    let data = await fs.readFileSync(path, { encoding: 'utf8', flag: 'r+' })
-
-    // console.log(data)    // // // geting data in from of json
-
-    let newData = JSON.parse(data)   // // // Storing that data in other var
-
-    newData[keyName]++      // // // Increasing value of given key in params
-
-    // console.log(newData)
-
-
-    // let update = newData[keyName]
-
-    // console.log(update)
-
-
-
-    await fs.writeFile(path, JSON.stringify(newData), (err) => {
-        if (err) {
-            throw err
-        }
-        console.log("updated")
-
-    })
-
-    // // // Writing same file with different obj recently created 
-
-}
-
-
-
-
-
-// // // Change data.json with actual data on every code push from localhost --> 
-
-// // // Get all previous otp data code ------>
-
-async function getAllSendedAndVerifyVals(req, res) {
-    try {
-
-
-
-        // updateDataInJsonFile("totelSendedOTPsAre")   // // checking here
-
-        // let loadDataOfJsonFile
-
-        // fs.readFile( path , (err, data) => {
-        //     // Catch this!
-        //     if (err) throw err;
-
-        //     console.log(data)
-
-        //     loadDataOfJsonFile =  JSON.parse(data);
-        //     console.log(loadDataOfJsonFile);
-        // });
-
-
-        let data = await fs.readFileSync(path, { encoding: 'utf8', flag: 'r' })
-
-        let newData = JSON.parse(data)
-
-        res.status(200).send({ status: true, data: { ...newData } })
-
-    } catch (err) {
-        console.log(err)
-        res.status(500).send({ status: false, message: err.message })
-
-    }
-}
-
-
-
-
+// // // ***************************************************** Send OTP here  **************************************
 // // // Send opt code ------------->
 
 
@@ -147,7 +62,7 @@ const sendOTP = async function (req, res) {
         }
 
 
-        await transport.sendMail(mailOptions, function (err, info) {
+        await transport.sendMail(mailOptions, async function (err, info) {
 
             if (err) {
                 console.log(err)
@@ -155,8 +70,8 @@ const sendOTP = async function (req, res) {
             } else {
                 // console.log(info.response)
 
-                updateDataInJsonFile("totelSendedOTPsAre")
-
+                // // // Creating new sendedotp model here ------->
+                sendedModel.create({ 'howMany': 1 }).then((result) => console.log(result)).catch((err) => { console.log(err) })
 
                 return res.status(200).send({ status: true, message: 'Check your mail, OTP sended successfully', data: now })
             }
@@ -176,7 +91,7 @@ const sendOTP = async function (req, res) {
 
 
 
-
+// // // ***************************************************** Verify OTP here  **************************************
 // // // Verify opt code ------------->
 
 const verifyOTP = async function (req, res) {
@@ -200,10 +115,9 @@ const verifyOTP = async function (req, res) {
             if (element[when]) {
 
                 if (otpIs === element.otp) {
-                    // totelVerifiedOTPsAre++
-
-
-                    updateDataInJsonFile("totelVerifiedOTPsAre")
+                    
+                    // // // Creating new verifyotp model here ------->
+                    verifiedModel.create({ 'howMany': 1 }).then((result) => console.log(result)).catch((err) => { console.log(err) })
 
 
                     sended = true
@@ -230,6 +144,63 @@ const verifyOTP = async function (req, res) {
 
 
 }
+
+
+
+
+
+// // // ***************************************************** Get all OTP's here  **************************************
+// // // Get all previous otp data code ------>
+
+async function getAllSendedAndVerifyVals(req, res) {
+    try {
+
+        // // // Periviously doing this ------------>
+
+        // updateDataInJsonFile("totelSendedOTPsAre")   // // checking here
+        // let loadDataOfJsonFile
+        // fs.readFile( path , (err, data) => {
+        //     // Catch this!
+        //     if (err) throw err;
+
+        //     console.log(data)
+
+        //     loadDataOfJsonFile =  JSON.parse(data);
+        //     console.log(loadDataOfJsonFile);
+        // });
+        // let data = await fs.readFileSync(path, { encoding: 'utf8', flag: 'r' })
+
+
+        // // // finding how many models are present with sended otp ----------->
+        let findSendedOTPs = await sendedModel.find()
+
+        // console.log(findSendedOTPs)
+
+
+        // let newData = JSON.parse(data)
+
+
+        // // // finding how many models are present with sended otp ----------->
+        let findVeifiedOTPs = await verifiedModel.find()
+
+
+        let data = {
+            totelSendedOTPsAre: findSendedOTPs.length,
+            totelVerifiedOTPsAre: findVeifiedOTPs.length
+        }
+
+        // console.log(data)
+
+        res.status(200).send({ status: true, data: { ...data } })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({ status: false, message: err.message })
+
+    }
+}
+
+
 
 
 

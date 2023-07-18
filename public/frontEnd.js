@@ -47,8 +47,9 @@ let otpRejex = /^[0-9]+$/
 // let themeChangeBtnClicked = 0
 
 
-let themeChangeBtnClicked = false
+// // // ***************************************************** Theme change function **************************************
 
+let themeChangeBtnClicked = false
 
 function themeChange() {
 
@@ -107,8 +108,10 @@ function themeChange() {
 
 
 
-// // // GO to top btn show on perticular scrool value --->
 
+
+// // // GO to top btn show on perticular scrool value --->
+// // // ***************************************************** Window scroll btn visibility **************************************
 
 let myScrollFunc = function () {
     let y = window.scrollY;
@@ -127,16 +130,42 @@ window.addEventListener("scroll", myScrollFunc);
 
 
 
-// // // contect me form code here ------------------------>
+
+
+// // // ***************************************************** Contact handler function **************************************
+
+// // // Some Enter hadlers -------->
+
+// // Name ---->
+document.getElementById("name_contact").addEventListener( "keydown" , function(e){
+    // console.log(e)
+    if(e.code === "Enter"){document.getElementById("email_contact").focus()}
+} )
+
+// // Email ---->
+document.getElementById("email_contact").addEventListener( "keydown" , function(e){
+    // console.log(e)
+    if(e.code === "Enter"){document.getElementById("message_contact").focus()}
+} )
+
+// // MEssage ---->
+document.getElementById("message_contact").addEventListener( "keydown" , function(e){
+    // console.log(e)
+    if(e.code === "Enter"){contectFormSubmit()}
+} )
+
+
+
+
+// // // Actual contect form handler code here ------------------------>
 
 async function contectFormSubmit() {
 
     try {
 
-
-        let name = document.getElementById("name").value.trim()
-        let email = document.getElementById("email").value.trim()
-        let message = document.getElementById("message").value.trim()
+        let name = document.getElementById("name_contact").value.trim()
+        let email = document.getElementById("email_contact").value.trim()
+        let message = document.getElementById("message_contact").value.trim()
 
         // alert(name + email + message +"Let's submit")
 
@@ -150,9 +179,6 @@ async function contectFormSubmit() {
         if (!nameRejex.test(name)) return alert(`${name} :- Given name is incorrect, Only alphabets are allowed`)
 
         if (!emailRjex.test(email)) return alert(`${email} :- Given Email is  incorrect.`)
-
-
-
 
         let body = {
             name: name,
@@ -183,24 +209,50 @@ async function contectFormSubmit() {
         } else {
             console.log(data)
 
-            document.getElementById("name").value = ""
-            document.getElementById("email").value = ""
-            document.getElementById("message").value = ""
+            document.getElementById("name_contact").value = ""
+            document.getElementById("email_contact").value = ""
+            document.getElementById("message_contact").value = ""
 
             alert(data.message)
 
         }
 
-
     } catch (e) {
         console.log(e)
-        alert(a.message)
+        alert(e.message)
     }
 
 }
 
 
 
+
+// // // ***************************************************** OTP related code here  **************************************
+
+
+// // // Some Enter hadlers -------->
+
+document.getElementById("email_otp").addEventListener( "keydown" , function(e){
+    if(e.code === "Enter") {
+        
+        sendOTP();  
+
+        document.getElementById("otp_input").disabled = false
+        document.getElementById("otp_input").focus()
+    }
+} )
+
+
+document.getElementById("otp_input").addEventListener( "keydown" , function(e){
+    if(e.code === "Enter") {
+        verifyOTP();
+    }
+} )
+
+
+
+
+// // // ************************* Send OTP **************
 
 // // // OTP code here ------------------------>
 
@@ -322,9 +374,6 @@ async function sendOTP() {
             return
         }
 
-
-
-
     } catch (e) {
         console.log(e)
         alert(e.message)
@@ -335,6 +384,7 @@ async function sendOTP() {
 
 
 // // // verify otp ----------> 
+// // // ************************* Verify OTP **************
 
 
 let isProcessDone = false
@@ -430,6 +480,7 @@ async function verifyOTP() {
 
 
 
+// // // ************************ How many send and how many verified **************
 
 async function allSendedAndVerifiedOTP() {
 
