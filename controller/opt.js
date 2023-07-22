@@ -18,7 +18,7 @@ function genrateOTP() {
 
 
 // // // Some variables to store information -------->
-let storedOTP = []
+let storedOTP = {}
 
 
 // // // ***************************************************** Send OTP here  **************************************
@@ -41,14 +41,25 @@ const sendOTP = async function (req, res) {
         let now = Date.now()
         // console.log(now)
 
-        storedOTP.push({ [now]: true, otp: realOTP })
+        // storedOTP.push({ [now]: true, otp: realOTP })
 
-        setTimeout(() => {
-            storedOTP.shift()
-        }, 1000 * 120)
 
+        // text: `OTP from Ashish's website is :- ${storedOTP[storedOTP.length - 1].otp} .`
+        storedOTP[now] = realOTP    // // // Creating a key with timestamp and value is real Generated otp.
 
         // console.log(storedOTP)
+
+
+        // // // Now stoped deleting otp by setTimeout.
+        // setTimeout(() => {
+        //     // storedOTP.shift()
+        //     delete storedOTP[now]
+
+        //     console.log(storedOTP)
+        // }, 1000 * 120)
+
+
+        // console.log(storedOTP) 
         // console.log(storedOTP.length)
 
 
@@ -58,7 +69,7 @@ const sendOTP = async function (req, res) {
             from: process.env.USER_EMAIL,
             to: email,
             subject: `${realOTP} sended using nodemailer.`,
-            text: `OTP from Ashish's website is :- ${storedOTP[storedOTP.length - 1].otp} .`
+            text: `OTP from Ashish's website is :- ${storedOTP[now]} .`
         }
 
 
@@ -106,8 +117,13 @@ const verifyOTP = async function (req, res) {
 
         // console.log(storedOTP)
 
-        let sended = false          // // // This variable used to see a request sended or not (inside loop) ------> 
 
+        // let sended = false          // // // This variable used to see a request sended or not (inside loop) ------> 
+
+
+        /*
+
+        // // // Not storing data in arr of object 
         for (let i = 0; i < storedOTP.length; i++) {
 
             let element = storedOTP[i]
@@ -117,7 +133,8 @@ const verifyOTP = async function (req, res) {
                 if (otpIs === element.otp) {
                     
                     // // // Creating new verifyotp model here ------->
-                    verifiedModel.create({ 'howMany': 1 }).then((result) => console.log(result)).catch((err) => { console.log(err) })
+                    // // // On testing mode not sending to db
+                    // verifiedModel.create({ 'howMany': 1 }).then((result) => console.log(result)).catch((err) => { console.log(err) })
 
 
                     sended = true
@@ -130,10 +147,36 @@ const verifyOTP = async function (req, res) {
             }
         }
 
+        // if (!sended) {
+        //     return res.status(400).send({ status: false, message: "OTP not present or expired" })
+        // }
 
-        if (!sended) {
+
+        */
+
+
+        console.log(storedOTP[when])
+
+        if (storedOTP[when]) {
+
+            if (otpIs === storedOTP[when]) {
+
+                // // // Creating new verifyotp model here ------->
+                verifiedModel.create({ 'howMany': 1 }).then((result) => console.log(result)).catch((err) => { console.log(err) })
+
+                sended = true
+                return res.status(200).send({ status: true, message: "OTP matched" })
+            } else {
+                sended = true
+                return res.status(400).send({ status: false, message: "OTP not matched" })
+            }
+
+        } else {
             return res.status(400).send({ status: false, message: "OTP not present or expired" })
+
         }
+
+
 
 
     } catch (err) {
@@ -142,6 +185,31 @@ const verifyOTP = async function (req, res) {
 
     }
 
+
+}
+
+// // // ******************************************************************** Delete otp ********************************************************************
+
+
+function expireOTP(req, res) {
+    try {
+
+        // console.log(req.params)
+        // console.log(req.params.when)
+
+        // // Working -------->
+        const when = req.params.when
+        delete storedOTP[when]
+
+
+        // console.log( storedOTP)
+
+        res.status(200).send({ status: true, message: "deleted" })
+
+    } catch (err) {
+
+        res.status(500).send({ status: false, message: err.message })
+    }
 
 }
 
@@ -204,4 +272,4 @@ async function getAllSendedAndVerifyVals(req, res) {
 
 
 
-module.exports = { sendOTP, verifyOTP, getAllSendedAndVerifyVals }
+module.exports = { sendOTP, verifyOTP, getAllSendedAndVerifyVals, expireOTP }

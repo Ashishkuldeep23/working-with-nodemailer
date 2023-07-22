@@ -346,7 +346,7 @@ async function sendOTP() {
 
 
             // // // setInterval or timer for checking ------------>
-            interval = setInterval(() => {
+            interval = setInterval( async () => {
                 let newTime = time - 1
                 document.getElementById("timer").innerText = `${newTime}s`
                 time = newTime
@@ -365,6 +365,23 @@ async function sendOTP() {
                     document.getElementById("email_otp").value = "Timeout, Refresh page for again send otp."
                     document.getElementById("email_otp").style.color = "darkred"
                     document.getElementById("email_otp").disabled = true
+
+
+
+                    // // send a request for otp expired by using API when ------>
+                    // console.log(when)
+
+                    let req = await fetch(`/expireOTP${when}`)      // //  // Get call then not need to use option object
+                    let data = await req.json()
+
+                    // console.log(data)
+
+                    if(data.status){
+                        console.log(data.message)
+                    }else{
+                        alert(data.message)
+                    }
+
                     
                 }
 
