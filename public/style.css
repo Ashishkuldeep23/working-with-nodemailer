@@ -52,6 +52,7 @@
 
 
 /* some class used by js for dark mode */
+/* Below SSAS type css code is working well , and remeber 1st rule of coding if code is working then don't touch it 😂 */
 
 .dark_mode {
     background-color: #212529;
@@ -251,7 +252,7 @@ main {
 }
 
 
-
+/* OTP form code starts here ----> */
 
 #otp_form {
     display: flex;

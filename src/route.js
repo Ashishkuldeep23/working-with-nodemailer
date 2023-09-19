@@ -16,10 +16,10 @@ router.post("/contect-form" , post_contact_form)
 
 
 // // // OTP Api ---------->
-router.get("/allValuesAre" , getAllSendedAndVerifyVals)
-router.post("/sendOTP" , sendOTP)
-router.post("/verifyOTP" , verifyOTP)
-router.get("/expireOTP:when" , expireOTP)
+router.get("/allValuesAre" , getAllSendedAndVerifyVals)             // // // Get how many otp sended and how many verified Api. 
+router.post("/sendOTP" , sendOTP)             // // // Send OTP Api. 
+router.post("/verifyOTP" , verifyOTP)             // // // Verify OTP Api. 
+router.get("/expireOTP:when" , expireOTP)             // // // Delete OTP by tempstamp Api. 
 
 
 
