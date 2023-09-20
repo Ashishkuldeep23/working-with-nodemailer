@@ -1,6 +1,8 @@
 const express = require("express")
 require('dotenv').config()
 
+const cors = require("cors")
+
 // // // Mongoose here (only one model to how many otp sended  and how many verified-->)
 
 const mongoose = require("mongoose") 
@@ -10,6 +12,11 @@ mongoose.connect("mongodb+srv://ashishkuldeep23:RAPXp7lktCcf8jBm@cluster0.xtascc
 })
 .then(()=>{ console.log("MongoDB connected") } )
 .catch((err)=>{console.log(err)})
+
+
+
+// // // Cors errr
+app.use(cors())
 
 
 //  // // All routes importing here

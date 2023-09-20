@@ -1,6 +1,6 @@
 const router = require("express").Router()
 
-const cors = require("cors")
+
 
 const { post_contact_form } = require("../controller/post_form_controller")
 const { sendOTP, verifyOTP, getAllSendedAndVerifyVals, expireOTP } = require("../controller/opt")
@@ -48,7 +48,7 @@ router.get("/", (req, res) => {
 
 
 // // contect form Api ----->
-router.post("/contect-form",  cors() , post_contact_form)
+router.post("/contect-form" , post_contact_form)
 
 
 // // // OTP Api ---------->
