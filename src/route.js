@@ -12,22 +12,22 @@ router.get("/", (req, res) => {
 })
 
 
-// // // remove slash (/) in last from white list end points.
-let whiteList = ["https://working-with-nodemailer.onrender.com", "https://ashish-portfolio-three.vercel.app", "http://localhost:3000" ]
-const corsOptions = {
-    origin: function (origin, callback) {
+// // // // remove slash (/) in last from white list end points.
+// let whiteList = ["https://working-with-nodemailer.onrender.com", "https://ashish-portfolio-three.vercel.app", "http://localhost:3000" ]
+// const corsOptions = {
+//     origin: function (origin, callback) {
 
-        // console.log(origin)
+//         // console.log(origin)
 
-        if (whiteList.indexOf(origin) !== -1) {
-            // console.log(1)
-            callback(null, true)
-        } else {
-            // console.log(2)
-            return callback(new Error("Not Allowed by CORS"))
-        }
-    }
-}
+//         if (whiteList.indexOf(origin) !== -1) {
+//             // console.log(1)
+//             callback(null, true)
+//         } else {
+//             // console.log(2)
+//             return callback(new Error("Not Allowed by CORS"))
+//         }
+//     }
+// }
 
 
 
@@ -48,7 +48,7 @@ const corsOptions = {
 
 
 // // contect form Api ----->
-router.post("/contect-form",  cors(corsOptions) , post_contact_form)
+router.post("/contect-form",  cors() , post_contact_form)
 
 
 // // // OTP Api ---------->
