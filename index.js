@@ -15,8 +15,6 @@ mongoose.connect("mongodb+srv://ashishkuldeep23:RAPXp7lktCcf8jBm@cluster0.xtascc
 
 
 
-// // // Cors errr
-app.use(cors())
 
 
 //  // // All routes importing here
@@ -24,6 +22,9 @@ const router = require("./src/route")
 
 
 const app = express()
+
+// // // Cors errr
+app.use(cors())
 
 app.use(express.json({extended : true}))
 
